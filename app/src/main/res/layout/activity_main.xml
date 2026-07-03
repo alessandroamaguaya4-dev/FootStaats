@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1A3A5C">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="24dp">
+
+        <!-- Foto de perfil -->
+        <ImageView
+            android:id="@+id/imgPerfil"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerCrop"
+            android:background="#2E86C1"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Nombre -->
+        <TextView
+            android:id="@+id/tvNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre del jugador"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="4dp"/>
+
+        <!-- Posición -->
+        <TextView
+            android:id="@+id/tvPosicion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Posición"
+            android:textSize="14sp"
+            android:textColor="#B0C4DE"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Resumen estadísticas -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="24dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tvTotalGoles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Goles"
+                    android:textSize="12sp"
+                    android:textColor="#B0C4DE"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tvTotalAsistencias"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Asistencias"
+                    android:textSize="12sp"
+                    android:textColor="#B0C4DE"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tvTotalPartidos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Partidos"
+                    android:textSize="12sp"
+                    android:textColor="#B0C4DE"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        <com.github.mikephil.charting.charts.RadarChart
+            android:id="@+id/radarChart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Botones de acción -->
+        <Button
+            android:id="@+id/btnRegistrarPartido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrar Partido"
+            android:textColor="#1A3A5C"
+            android:backgroundTint="#FFFFFF"
+            android:layout_marginBottom="12dp"/>
+
+        <Button
+            android:id="@+id/btnRegistrarEntrenamiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrar Entrenamiento"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#2E86C1"
+            android:layout_marginBottom="12dp"/>
+
+        <Button
+            android:id="@+id/btnRegistrarLesion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrar Lesión"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#C0392B"
+            android:layout_marginBottom="12dp"/>
+
+        <Button
+            android:id="@+id/btnHistorial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver Historial"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#1A5276"/>
+
+    </LinearLayout>
+</ScrollView>

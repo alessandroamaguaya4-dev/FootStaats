@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1A3A5C">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registrar Lesión"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="24dp"/>
+
+        <EditText android:id="@+id/etFecha" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Fecha (dd/mm/aaaa)" android:textColorHint="#B0C4DE" android:textColor="#FFFFFF" android:backgroundTint="#2E86C1" android:layout_marginBottom="12dp"/>
+        <EditText android:id="@+id/etTipo" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Tipo (muscular/ligamento/hueso/otra)" android:textColorHint="#B0C4DE" android:textColor="#FFFFFF" android:backgroundTint="#2E86C1" android:layout_marginBottom="12dp"/>
+        <EditText android:id="@+id/etParteCuerpo" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Parte del cuerpo (rodilla/tobillo...)" android:textColorHint="#B0C4DE" android:textColor="#FFFFFF" android:backgroundTint="#2E86C1" android:layout_marginBottom="12dp"/>
+        <EditText android:id="@+id/etDias" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Días de recuperación" android:inputType="number" android:textColorHint="#B0C4DE" android:textColor="#FFFFFF" android:backgroundTint="#2E86C1" android:layout_marginBottom="12dp"/>
+        <EditText android:id="@+id/etDescripcion" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Descripción" android:textColorHint="#B0C4DE" android:textColor="#FFFFFF" android:backgroundTint="#2E86C1" android:layout_marginBottom="24dp"/>
+
+        <Button android:id="@+id/btnGuardar" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Guardar Lesión" android:textColor="#1A3A5C" android:backgroundTint="#C0392B"/>
+
+    </LinearLayout>
+</ScrollView>

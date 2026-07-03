@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1A3A5C">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="32dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Crear perfil"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="24dp"/>
+
+        <ImageView
+            android:id="@+id/imgFotoPerfil"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerCrop"
+            android:background="#2E86C1"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Toca para agregar foto"
+            android:textColor="#B0C4DE"
+            android:textSize="12sp"
+            android:layout_marginBottom="24dp"/>
+
+        <EditText
+            android:id="@+id/etNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre completo"
+            android:textColorHint="#B0C4DE"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#2E86C1"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tvErrorNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#E74C3C"
+            android:textSize="12sp"
+            android:visibility="gone"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etCorreo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correo electrónico"
+            android:inputType="textEmailAddress"
+            android:textColorHint="#B0C4DE"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#2E86C1"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tvErrorCorreo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#E74C3C"
+            android:textSize="12sp"
+            android:visibility="gone"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etConfirmarCorreo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirmar correo"
+            android:inputType="textEmailAddress"
+            android:textColorHint="#B0C4DE"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#2E86C1"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tvErrorConfirmarCorreo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#E74C3C"
+            android:textSize="12sp"
+            android:visibility="gone"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etContrasena"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:textColorHint="#B0C4DE"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#2E86C1"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tvErrorContrasena"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#E74C3C"
+            android:textSize="12sp"
+            android:visibility="gone"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etPosicion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Posición (ej. Delantero, Portero)"
+            android:textColorHint="#B0C4DE"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#2E86C1"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etEdad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Edad"
+            android:inputType="number"
+            android:textColorHint="#B0C4DE"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#2E86C1"
+            android:layout_marginBottom="32dp"/>
+
+        <Button
+            android:id="@+id/btnGuardar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar y continuar"
+            android:textColor="#1A3A5C"
+            android:backgroundTint="#FFFFFF"/>
+
+    </LinearLayout>
+</ScrollView>
