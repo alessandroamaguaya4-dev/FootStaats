@@ -15,7 +15,7 @@ import com.example.footstaats.data.model.Lesion;
 import com.example.footstaats.data.model.Partido;
 import com.example.footstaats.data.model.Usuario;
 
-@Database(entities = {Partido.class, Entrenamiento.class, Lesion.class, Usuario.class}, version = 3)
+@Database(entities = {Partido.class, Entrenamiento.class, Lesion.class, Usuario.class}, version = 5)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instancia;

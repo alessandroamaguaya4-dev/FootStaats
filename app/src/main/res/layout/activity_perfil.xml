@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0D131A"
@@ -12,10 +13,19 @@
         android:orientation="vertical"
         android:padding="24dp">
 
+        <ImageButton
+            android:id="@+id/btnAtras"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@android:drawable/ic_menu_revert"
+            android:background="@android:color/transparent"
+            app:tint="#FFFFFF"
+            android:layout_marginBottom="16dp"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Crear Cuenta"
+            android:text="Editar Perfil"
             android:textSize="30sp"
             android:fontFamily="sans-serif-black"
             android:textStyle="bold"
@@ -29,16 +39,15 @@
             android:layout_gravity="center"
             android:src="@android:drawable/ic_menu_camera"
             android:background="#1E2630"
-            android:padding="20dp"/>
+            android:scaleType="centerCrop"/>
 
         <TextView
-            android:id="@+id/tvAgregarFoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
-            android:text="Toca aquí para agregar foto"
+            android:text="Toca aquí para cambiar la foto"
             android:textColor="#627285"
             android:textSize="12sp"/>
 
@@ -54,48 +63,6 @@
             app:boxStrokeWidth="0dp"
             android:layout_marginBottom="14dp">
             <EditText android:id="@+id/etNombre" android:layout_width="match_parent" android:layout_height="54dp" android:hint="Nombre completo" android:textColorHint="#627285" android:textColor="#FFFFFF" android:background="@android:color/transparent" android:paddingHorizontal="16dp"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintEnabled="false"
-            app:boxBackgroundColor="#1E2630"
-            app:boxCornerRadiusTopStart="16dp"
-            app:boxCornerRadiusTopEnd="16dp"
-            app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusBottomEnd="16dp"
-            app:boxStrokeWidth="0dp"
-            android:layout_marginBottom="14dp">
-            <EditText android:id="@+id/etCorreo" android:layout_width="match_parent" android:layout_height="54dp" android:hint="Correo electrónico" android:textColorHint="#627285" android:textColor="#FFFFFF" android:background="@android:color/transparent" android:paddingHorizontal="16dp" android:inputType="textEmailAddress"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintEnabled="false"
-            app:boxBackgroundColor="#1E2630"
-            app:boxCornerRadiusTopStart="16dp"
-            app:boxCornerRadiusTopEnd="16dp"
-            app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusBottomEnd="16dp"
-            app:boxStrokeWidth="0dp"
-            android:layout_marginBottom="14dp">
-            <EditText android:id="@+id/etConfirmarCorreo" android:layout_width="match_parent" android:layout_height="54dp" android:hint="Confirmar correo" android:textColorHint="#627285" android:textColor="#FFFFFF" android:background="@android:color/transparent" android:paddingHorizontal="16dp" android:inputType="textEmailAddress"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintEnabled="false"
-            app:boxBackgroundColor="#1E2630"
-            app:boxCornerRadiusTopStart="16dp"
-            app:boxCornerRadiusTopEnd="16dp"
-            app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusBottomEnd="16dp"
-            app:boxStrokeWidth="0dp"
-            android:layout_marginBottom="14dp">
-            <EditText android:id="@+id/etContrasena" android:layout_width="match_parent" android:layout_height="54dp" android:hint="Contraseña" android:inputType="textPassword" android:textColorHint="#627285" android:textColor="#FFFFFF" android:background="@android:color/transparent" android:paddingHorizontal="16dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -141,21 +108,30 @@
             <EditText android:id="@+id/etEdad" android:layout_width="match_parent" android:layout_height="54dp" android:hint="Edad" android:inputType="number" android:textColorHint="#627285" android:textColor="#FFFFFF" android:background="@android:color/transparent" android:paddingHorizontal="16dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView android:id="@+id/tvErrorNombre" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#FF3B30" android:visibility="gone" android:layout_marginBottom="4dp"/>
-        <TextView android:id="@+id/tvErrorCorreo" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#FF3B30" android:visibility="gone" android:layout_marginBottom="4dp"/>
-        <TextView android:id="@+id/tvErrorConfirmarCorreo" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#FF3B30" android:visibility="gone" android:layout_marginBottom="4dp"/>
-        <TextView android:id="@+id/tvErrorContrasena" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#FF3B30" android:visibility="gone" android:layout_marginBottom="16dp"/>
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnGuardar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="Registrar"
+            android:text="Guardar Cambios"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
             app:backgroundTint="#2E86C1"
             app:cornerRadius="16dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:layout_marginBottom="12dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCerrarSesion"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:text="Cerrar Sesión"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:backgroundTint="#C0392B"
+            app:cornerRadius="14dp"
             android:insetTop="0dp"
             android:insetBottom="0dp"/>
 

@@ -1,12 +1,14 @@
 package com.example.footstaats.ui;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -22,6 +24,7 @@ import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.data.RadarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -30,7 +33,11 @@ public class MainActivity extends AppCompatActivity {
 
     private RadarChart radarChart;
     private TextView tvTotalGoles, tvTotalAsistencias, tvTotalPartidos;
+    private TextView tvNombre, tvPosicion;
+    private ImageView imgPerfil;
     private int usuarioId;
+
+    private ActivityResultLauncher<Intent> perfilLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
         String posicion = getIntent().getStringExtra("posicion");
         String foto = getIntent().getStringExtra("foto");
 
-        TextView tvNombre = findViewById(R.id.tvNombre);
-        TextView tvPosicion = findViewById(R.id.tvPosicion);
-        ImageView imgPerfil = findViewById(R.id.imgPerfil);
+        tvNombre = findViewById(R.id.tvNombre);
+        tvPosicion = findViewById(R.id.tvPosicion);
+        imgPerfil = findViewById(R.id.imgPerfil);
         tvTotalGoles = findViewById(R.id.tvTotalGoles);
         tvTotalAsistencias = findViewById(R.id.tvTotalAsistencias);
         tvTotalPartidos = findViewById(R.id.tvTotalPartidos);
@@ -54,8 +61,13 @@ public class MainActivity extends AppCompatActivity {
         tvPosicion.setText(posicion);
 
         if (foto != null) {
-            Glide.with(this).load(Uri.parse(foto)).circleCrop().into(imgPerfil);
+            Glide.with(this).load(new File(foto)).circleCrop().into(imgPerfil);
         }
+
+        registrarPerfilLauncher();
+
+        LinearLayout headerPerfil = findViewById(R.id.headerPerfil);
+        headerPerfil.setOnClickListener(v -> abrirPerfil());
 
         // Botones
         Button btnPartido = findViewById(R.id.btnRegistrarPartido);
@@ -90,6 +102,31 @@ public class MainActivity extends AppCompatActivity {
         cargarEstadisticas();
     }
 
+    private void registrarPerfilLauncher() {
+        perfilLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                resultado -> {
+                    if (resultado.getResultCode() == RESULT_OK && resultado.getData() != null) {
+                        String nuevoNombre = resultado.getData().getStringExtra("nombre");
+                        String nuevaPosicion = resultado.getData().getStringExtra("posicion");
+                        String nuevaFoto = resultado.getData().getStringExtra("foto");
+
+                        tvNombre.setText(nuevoNombre);
+                        tvPosicion.setText(nuevaPosicion);
+                        if (nuevaFoto != null) {
+                            Glide.with(this).load(new File(nuevaFoto)).circleCrop().into(imgPerfil);
+                        }
+                    }
+                }
+        );
+    }
+
+    private void abrirPerfil() {
+        Intent intent = new Intent(this, PerfilActivity.class);
+        intent.putExtra("usuarioId", usuarioId);
+        perfilLauncher.launch(intent);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -99,9 +136,9 @@ public class MainActivity extends AppCompatActivity {
     private void cargarEstadisticas() {
         Executors.newSingleThreadExecutor().execute(() -> {
             AppDatabase db = AppDatabase.getInstance(this);
-            List<Partido> partidos = db.partidoDao().obtenerTodosSync();
-            List<Entrenamiento> entrenamientos = db.entrenamientoDao().obtenerTodosSync();
-            List<Lesion> lesiones = db.lesionDao().obtenerTodosSync();
+            List<Partido> partidos = db.partidoDao().obtenerTodosSync(usuarioId);
+            List<Entrenamiento> entrenamientos = db.entrenamientoDao().obtenerTodosSync(usuarioId);
+            List<Lesion> lesiones = db.lesionDao().obtenerTodosSync(usuarioId);
 
             int totalGoles = 0, totalAsistencias = 0, totalPartidos = 0;
             int totalMinutos = 0, totalEntrenamientos = 0;
@@ -119,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
                 totalEntrenamientos = entrenamientos.size();
             }
 
-            // Normalizar valores para el radar (máximo 10)
             float golesN = Math.min(totalGoles, 10);
             float asistenciasN = Math.min(totalAsistencias, 10);
             float partidosN = Math.min(totalPartidos, 10);
@@ -132,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
                 tvTotalGoles.setText(String.valueOf(fg));
                 tvTotalAsistencias.setText(String.valueOf(fa));
                 tvTotalPartidos.setText(String.valueOf(fp));
-
                 configurarRadar(golesN, asistenciasN, partidosN, minutosN, entrenamientosN);
             });
         });

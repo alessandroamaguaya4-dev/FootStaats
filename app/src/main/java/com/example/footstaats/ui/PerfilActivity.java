@@ -1,14 +1,14 @@
 package com.example.footstaats.ui;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -16,12 +16,12 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import com.bumptech.glide.Glide;
 import com.example.footstaats.R;
 import com.example.footstaats.data.model.Usuario;
 import com.example.footstaats.repository.UsuarioRepository;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.File;
@@ -31,20 +31,23 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegisterActivity extends AppCompatActivity {
+public class PerfilActivity extends AppCompatActivity {
 
-    private AutoCompleteTextView etPosicion;
-    private EditText etNombre, etCorreo, etConfirmarCorreo, etContrasena, etEdad;
+    private ImageButton btnAtras;
     private ImageView imgFotoPerfil;
-    private TextView tvErrorNombre, tvErrorCorreo, tvErrorConfirmarCorreo, tvErrorContrasena;
-    private MaterialButton btnGuardar;
+    private EditText etNombre, etEdad;
+    private AutoCompleteTextView etPosicion;
+    private MaterialButton btnGuardar, btnCerrarSesion;
+
+    private int usuarioId;
+    private Usuario usuarioActual;
 
     private UsuarioRepository repository;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore;
 
     private Uri fotoUriTemp;
-    private String fotoGuardadaPath;
+    private String fotoGuardadaPath; // null hasta que el usuario elija una nueva foto
 
     private ActivityResultLauncher<Uri> cameraLauncher;
     private ActivityResultLauncher<String> galleryLauncher;
@@ -52,21 +55,17 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_perfil);
 
+        usuarioId = getIntent().getIntExtra("usuarioId", -1);
+
+        btnAtras = findViewById(R.id.btnAtras);
         imgFotoPerfil = findViewById(R.id.imgFotoPerfil);
         etNombre = findViewById(R.id.etNombre);
-        etCorreo = findViewById(R.id.etCorreo);
-        etConfirmarCorreo = findViewById(R.id.etConfirmarCorreo);
-        etContrasena = findViewById(R.id.etContrasena);
         etPosicion = findViewById(R.id.etPosicion);
         etEdad = findViewById(R.id.etEdad);
-
-        tvErrorNombre = findViewById(R.id.tvErrorNombre);
-        tvErrorCorreo = findViewById(R.id.tvErrorCorreo);
-        tvErrorConfirmarCorreo = findViewById(R.id.tvErrorConfirmarCorreo);
-        tvErrorContrasena = findViewById(R.id.tvErrorContrasena);
         btnGuardar = findViewById(R.id.btnGuardar);
+        btnCerrarSesion = findViewById(R.id.btnCerrarSesion);
 
         repository = new UsuarioRepository(getApplication());
         firebaseAuth = FirebaseAuth.getInstance();
@@ -78,9 +77,36 @@ public class RegisterActivity extends AppCompatActivity {
 
         registrarLaunchers();
 
+        btnAtras.setOnClickListener(v -> finish());
         imgFotoPerfil.setOnClickListener(v -> mostrarSelectorFoto());
+        btnGuardar.setOnClickListener(v -> guardarCambios());
+        btnCerrarSesion.setOnClickListener(v -> confirmarCerrarSesion());
 
-        btnGuardar.setOnClickListener(v -> guardarRegistro());
+        cargarDatosActuales();
+    }
+
+    private void cargarDatosActuales() {
+        if (usuarioId == -1) {
+            Toast.makeText(this, "Error: usuario no válido", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        repository.obtenerPorId(usuarioId, usuario -> {
+            if (usuario == null) {
+                Toast.makeText(this, "No se encontró el perfil", Toast.LENGTH_SHORT).show();
+                finish();
+                return;
+            }
+            usuarioActual = usuario;
+            etNombre.setText(usuario.nombre);
+            etPosicion.setText(usuario.posicion, false);
+            etEdad.setText(usuario.edad);
+
+            if (usuario.foto != null) {
+                Glide.with(this).load(new File(usuario.foto)).circleCrop().into(imgFotoPerfil);
+            }
+        });
     }
 
     private void registrarLaunchers() {
@@ -151,92 +177,68 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void guardarRegistro() {
+    private void guardarCambios() {
+        if (usuarioActual == null) return;
+
         String nombre = etNombre.getText().toString().trim();
-        String correo = etCorreo.getText().toString().trim().toLowerCase();
-        String confirmarCorreo = etConfirmarCorreo.getText().toString().trim().toLowerCase();
-        String contrasena = etContrasena.getText().toString().trim();
         String posicion = etPosicion.getText().toString().trim();
-        String edadStr = etEdad.getText().toString().trim();
+        String edad = etEdad.getText().toString().trim();
 
-        tvErrorNombre.setVisibility(View.GONE);
-        tvErrorCorreo.setVisibility(View.GONE);
-        tvErrorConfirmarCorreo.setVisibility(View.GONE);
-        tvErrorContrasena.setVisibility(View.GONE);
-
-        if (nombre.isEmpty() || correo.isEmpty() || contrasena.isEmpty() || posicion.isEmpty()) {
-            Toast.makeText(this, "Por favor, llene los campos obligatorios", Toast.LENGTH_SHORT).show();
+        if (nombre.isEmpty() || posicion.isEmpty()) {
+            Toast.makeText(this, "Nombre y posición son obligatorios", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (!correo.equals(confirmarCorreo)) {
-            tvErrorConfirmarCorreo.setText("Los correos no coinciden");
-            tvErrorConfirmarCorreo.setVisibility(View.VISIBLE);
-            return;
-        }
-
-        if (contrasena.length() < 6) {
-            tvErrorContrasena.setText("Mínimo 6 caracteres");
-            tvErrorContrasena.setVisibility(View.VISIBLE);
-            return;
-        }
+        String uid = firebaseAuth.getCurrentUser() != null ? firebaseAuth.getCurrentUser().getUid() : usuarioActual.firebaseUid;
+        String fotoFinal = fotoGuardadaPath != null ? fotoGuardadaPath : usuarioActual.foto;
 
         btnGuardar.setEnabled(false);
 
-        firebaseAuth.createUserWithEmailAndPassword(correo, contrasena)
-                .addOnSuccessListener(authResult -> {
-                    FirebaseUser firebaseUser = authResult.getUser();
-                    if (firebaseUser == null) {
-                        btnGuardar.setEnabled(true);
-                        Toast.makeText(this, "Error al crear la cuenta", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    guardarPerfilEnFirestore(firebaseUser.getUid(), nombre, correo, posicion, edadStr);
-                })
-                .addOnFailureListener(e -> {
-                    btnGuardar.setEnabled(true);
-                    tvErrorCorreo.setText(mensajeErrorFirebase(e));
-                    tvErrorCorreo.setVisibility(View.VISIBLE);
-                });
-    }
-
-    private void guardarPerfilEnFirestore(String uid, String nombre, String correo, String posicion, String edadStr) {
-        Map<String, Object> perfil = new HashMap<>();
-        perfil.put("nombre", nombre);
-        perfil.put("correo", correo);
-        perfil.put("posicion", posicion);
-        perfil.put("edad", edadStr);
-        perfil.put("foto", fotoGuardadaPath); // ruta local; ver nota sobre Storage más abajo
+        Map<String, Object> cambios = new HashMap<>();
+        cambios.put("nombre", nombre);
+        cambios.put("posicion", posicion);
+        cambios.put("edad", edad);
+        cambios.put("foto", fotoFinal);
 
         firestore.collection("usuarios").document(uid)
-                .set(perfil)
+                .update(cambios)
                 .addOnSuccessListener(unused -> {
-                    Usuario usuario = new Usuario();
-                    usuario.firebaseUid = uid;
-                    usuario.nombre = nombre;
-                    usuario.correo = correo;
-                    usuario.posicion = posicion;
-                    usuario.edad = edadStr;
-                    usuario.foto = fotoGuardadaPath;
+                    Usuario actualizado = new Usuario();
+                    actualizado.firebaseUid = uid;
+                    actualizado.nombre = nombre;
+                    actualizado.correo = usuarioActual.correo;
+                    actualizado.posicion = posicion;
+                    actualizado.edad = edad;
+                    actualizado.foto = fotoFinal;
 
-                    repository.guardarOActualizar(usuario, guardado -> {
-                        Toast.makeText(this, "Usuario registrado con éxito", Toast.LENGTH_SHORT).show();
+                    repository.guardarOActualizar(actualizado, guardado -> {
+                        Toast.makeText(this, "Perfil actualizado", Toast.LENGTH_SHORT).show();
+
+                        Intent resultado = new Intent();
+                        resultado.putExtra("nombre", guardado.nombre);
+                        resultado.putExtra("posicion", guardado.posicion);
+                        resultado.putExtra("foto", guardado.foto);
+                        setResult(RESULT_OK, resultado);
                         finish();
                     });
                 })
                 .addOnFailureListener(e -> {
                     btnGuardar.setEnabled(true);
-                    Toast.makeText(this, "Cuenta creada, pero falló guardar el perfil: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Error al guardar: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 });
     }
 
-    private String mensajeErrorFirebase(Exception e) {
-        String msg = e.getMessage();
-        if (msg != null && msg.contains("already in use")) {
-            return "Este correo ya está registrado";
-        } else if (msg != null && msg.contains("badly formatted")) {
-            return "Correo con formato inválido";
-        }
-        return "Error: " + (msg != null ? msg : "desconocido");
+    private void confirmarCerrarSesion() {
+        new AlertDialog.Builder(this)
+                .setTitle("Cerrar sesión")
+                .setMessage("¿Deseas cerrar sesión?")
+                .setPositiveButton("Sí", (dialog, which) -> {
+                    firebaseAuth.signOut();
+                    Intent intent = new Intent(this, SplashActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                })
+                .setNegativeButton("Cancelar", null)
+                .show();
     }
 }

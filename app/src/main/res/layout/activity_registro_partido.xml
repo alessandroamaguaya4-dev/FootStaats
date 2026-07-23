@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1A3A5C">
-
+    android:background="#0D131A"
+    android:fillViewport="true">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,21 +16,246 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Registrar Partido"
-            android:textSize="24sp"
+            android:textSize="30sp"
+            android:fontFamily="sans-serif-black"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
-            android:layout_marginBottom="24dp"/>
+            android:letterSpacing="-0.02"
+            android:layout_marginBottom="28dp"/>
 
-        <EditText android:id="@+id/etFecha" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Fecha (dd/mm/aaaa)" android:textColorHint="#B0C4DE" android:textColor="#FFFFFF" android:backgroundTint="#2E86C1" android:layout_marginBottom="12dp"/>
-        <EditText android:id="@+id/etRival" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Rival" android:textColorHint="#B0C4DE" android:textColor="#FFFFFF" android:backgroundTint="#2E86C1" android:layout_marginBottom="12dp"/>
-        <EditText android:id="@+id/etGoles" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Goles" android:inputType="number" android:textColorHint="#B0C4DE" android:textColor="#FFFFFF" android:backgroundTint="#2E86C1" android:layout_marginBottom="12dp"/>
-        <EditText android:id="@+id/etAsistencias" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Asistencias" android:inputType="number" android:textColorHint="#B0C4DE" android:textColor="#FFFFFF" android:backgroundTint="#2E86C1" android:layout_marginBottom="12dp"/>
-        <EditText android:id="@+id/etMinutos" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Minutos jugados" android:inputType="number" android:textColorHint="#B0C4DE" android:textColor="#FFFFFF" android:backgroundTint="#2E86C1" android:layout_marginBottom="12dp"/>
-        <EditText android:id="@+id/etTarjetas" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Tarjetas (ninguna/amarilla/roja)" android:textColorHint="#B0C4DE" android:textColor="#FFFFFF" android:backgroundTint="#2E86C1" android:layout_marginBottom="12dp"/>
-        <EditText android:id="@+id/etPosicion" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Posición jugada" android:textColorHint="#B0C4DE" android:textColor="#FFFFFF" android:backgroundTint="#2E86C1" android:layout_marginBottom="12dp"/>
-        <EditText android:id="@+id/etNotas" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Notas adicionales" android:textColorHint="#B0C4DE" android:textColor="#FFFFFF" android:backgroundTint="#2E86C1" android:layout_marginBottom="24dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="14dp">
 
-        <Button android:id="@+id/btnGuardar" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Guardar Partido" android:textColor="#1A3A5C" android:backgroundTint="#FFFFFF"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:hintEnabled="false"
+                app:boxBackgroundMode="filled"
+                app:boxBackgroundColor="#1E2630"
+                app:boxCornerRadiusTopStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+                <EditText
+                    android:id="@+id/etFecha"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:hint="Fecha"
+                    android:textColorHint="#B0C4DE"
+                    android:textColor="#FFFFFF"
+                    android:background="@android:color/transparent"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="15sp"
+                    android:focusable="false"
+                    android:cursorVisible="false"
+                    android:clickable="true"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/btnCalendario"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_menu_my_calendar"
+                android:background="#2E86C1"
+                android:layout_marginStart="8dp"
+                app:tint="#FFFFFF"/>
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:boxBackgroundColor="#1E2630"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxStrokeWidth="0dp"
+            android:layout_marginBottom="14dp">
+            <EditText
+                android:id="@+id/etRival"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:hint="Rival"
+                android:textColorHint="#627285"
+                android:textColor="#FFFFFF"
+                android:background="@android:color/transparent"
+                android:paddingHorizontal="16dp"
+                android:textSize="15sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:boxBackgroundColor="#1E2630"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxStrokeWidth="0dp"
+            android:layout_marginBottom="14dp">
+            <EditText
+                android:id="@+id/etGoles"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:hint="Goles"
+                android:inputType="number"
+                android:textColorHint="#627285"
+                android:textColor="#FFFFFF"
+                android:background="@android:color/transparent"
+                android:paddingHorizontal="16dp"
+                android:textSize="15sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:boxBackgroundColor="#1E2630"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxStrokeWidth="0dp"
+            android:layout_marginBottom="14dp">
+            <EditText
+                android:id="@+id/etAsistencias"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:hint="Asistencias"
+                android:inputType="number"
+                android:textColorHint="#627285"
+                android:textColor="#FFFFFF"
+                android:background="@android:color/transparent"
+                android:paddingHorizontal="16dp"
+                android:textSize="15sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:boxBackgroundColor="#1E2630"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxStrokeWidth="0dp"
+            android:layout_marginBottom="14dp">
+            <EditText
+                android:id="@+id/etMinutos"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:hint="Minutos jugados"
+                android:inputType="number"
+                android:textColorHint="#627285"
+                android:textColor="#FFFFFF"
+                android:background="@android:color/transparent"
+                android:paddingHorizontal="16dp"
+                android:textSize="15sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            app:hintEnabled="false"
+            app:boxBackgroundColor="#1E2630"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:endIconTint="#627285"
+            android:layout_marginBottom="14dp">
+            <AutoCompleteTextView
+                android:id="@+id/etTarjetas"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:hint="Tarjetas (Amonestación)"
+                android:textColorHint="#627285"
+                android:textColor="#FFFFFF"
+                android:background="@android:color/transparent"
+                android:paddingHorizontal="16dp"
+                android:textSize="15sp"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:inputType="none"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            app:hintEnabled="false"
+            app:boxBackgroundColor="#1E2630"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:endIconTint="#627285"
+            android:layout_marginBottom="14dp">
+            <AutoCompleteTextView
+                android:id="@+id/etPosicion"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:hint="Posición en este partido"
+                android:textColorHint="#627285"
+                android:textColor="#FFFFFF"
+                android:background="@android:color/transparent"
+                android:paddingHorizontal="16dp"
+                android:textSize="15sp"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:inputType="none"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:boxBackgroundColor="#1E2630"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxStrokeWidth="0dp"
+            android:layout_marginBottom="32dp">
+            <EditText
+                android:id="@+id/etNotas"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:hint="Notas del partido"
+                android:textColorHint="#627285"
+                android:textColor="#FFFFFF"
+                android:background="@android:color/transparent"
+                android:paddingHorizontal="16dp"
+                android:textSize="15sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnGuardar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Guardar Partido"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:backgroundTint="#2E86C1"
+            app:cornerRadius="16dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"/>
 
     </LinearLayout>
 </ScrollView>

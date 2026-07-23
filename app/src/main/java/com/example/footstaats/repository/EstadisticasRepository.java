@@ -1,4 +1,5 @@
 package com.example.footstaats.repository;
+
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
@@ -16,6 +17,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class EstadisticasRepository {
+
     private final PartidoDao partidoDao;
     private final EntrenamientoDao entrenamientoDao;
     private final LesionDao lesionDao;
@@ -29,42 +31,54 @@ public class EstadisticasRepository {
         executor = Executors.newSingleThreadExecutor();
     }
 
-    // Partidos
+    // ── PARTIDOS ──
     public void insertarPartido(Partido partido) {
         executor.execute(() -> partidoDao.insertar(partido));
     }
 
-    public LiveData<List<Partido>> obtenerPartidos() {
-        return partidoDao.obtenerTodos();
+    public void actualizarPartido(Partido partido) {
+        executor.execute(() -> partidoDao.actualizar(partido));
     }
 
     public void eliminarPartido(Partido partido) {
         executor.execute(() -> partidoDao.eliminar(partido.id));
     }
 
-    // Entrenamientos
+    public LiveData<List<Partido>> obtenerPartidos(int usuarioId) {
+        return partidoDao.obtenerTodos(usuarioId);
+    }
+
+    // ── ENTRENAMIENTOS ──
     public void insertarEntrenamiento(Entrenamiento entrenamiento) {
         executor.execute(() -> entrenamientoDao.insertar(entrenamiento));
     }
 
-    public LiveData<List<Entrenamiento>> obtenerEntrenamientos() {
-        return entrenamientoDao.obtenerTodos();
+    public void actualizarEntrenamiento(Entrenamiento entrenamiento) {
+        executor.execute(() -> entrenamientoDao.actualizar(entrenamiento));
     }
 
     public void eliminarEntrenamiento(Entrenamiento entrenamiento) {
         executor.execute(() -> entrenamientoDao.eliminar(entrenamiento.id));
     }
 
-    // Lesiones
+    public LiveData<List<Entrenamiento>> obtenerEntrenamientos(int usuarioId) {
+        return entrenamientoDao.obtenerTodos(usuarioId);
+    }
+
+    // ── LESIONES ──
     public void insertarLesion(Lesion lesion) {
         executor.execute(() -> lesionDao.insertar(lesion));
     }
 
-    public LiveData<List<Lesion>> obtenerLesiones() {
-        return lesionDao.obtenerTodos();
+    public void actualizarLesion(Lesion lesion) {
+        executor.execute(() -> lesionDao.actualizar(lesion));
     }
 
     public void eliminarLesion(Lesion lesion) {
         executor.execute(() -> lesionDao.eliminar(lesion.id));
+    }
+
+    public LiveData<List<Lesion>> obtenerLesiones(int usuarioId) {
+        return lesionDao.obtenerTodos(usuarioId);
     }
 }

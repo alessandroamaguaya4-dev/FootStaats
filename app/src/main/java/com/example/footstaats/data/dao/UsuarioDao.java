@@ -3,6 +3,7 @@ package com.example.footstaats.data.dao;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.footstaats.data.model.Usuario;
 
@@ -10,11 +11,14 @@ import com.example.footstaats.data.model.Usuario;
 public interface UsuarioDao {
 
     @Insert
-    void insertar(Usuario usuario);
+    long insertar(Usuario usuario);
 
-    @Query("SELECT * FROM usuarios WHERE correo = :correo AND contrasena = :contrasena LIMIT 1")
-    Usuario login(String correo, String contrasena);
+    @Update
+    void actualizar(Usuario usuario);
 
-    @Query("SELECT * FROM usuarios WHERE correo = :correo LIMIT 1")
-    Usuario buscarPorCorreo(String correo);
+    @Query("SELECT * FROM usuarios WHERE firebaseUid = :uid LIMIT 1")
+    Usuario buscarPorUid(String uid);
+
+    @Query("SELECT * FROM usuarios WHERE id = :id LIMIT 1")
+    Usuario buscarPorId(int id);
 }
